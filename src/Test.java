@@ -31,7 +31,7 @@ public class Test {
             //Veri çekmeden farkı itere edilebilir bir nesne olamayacağı için statement.execute metodunu kullanıyoruz. Ve içerisine veri ekleme kodlarını yazıyoruz.
             boolean execute = statement.execute("INSERT INTO t_manchester_city_rosters VALUES (16, 'RODRİGO', '', 50000, 'SPAIN', 1, 'ATLETICO MADRID')");
             System.out.println(execute);
-            //Veri yüklenmiştir.
+            //Veri yüklenmiştir. boolean değer false dönerse veri başarıyla yüklenmiştir.
         } catch (SQLException e) {
             e.printStackTrace();
         }
