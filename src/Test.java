@@ -2,9 +2,10 @@ import java.sql.*;
 
 public class Test {
     public static void main(String[] args) {
-        getSQLData();
+        //getSQLData();
         // setSQLData();
         //closeConnectionStatement();
+        preparedStatementTest("RODRİGO");
     }
 
     public static void getSQLData() {
@@ -77,5 +78,30 @@ public class Test {
             }
         }
         //Yukarıdaki şekilde kapatabiliriz.
+    }
+
+    public static void preparedStatementTest(String id) {
+        String queryById = "SELECT * FROM t_Manchester_City_Rosters WHERE person_name = ?";
+        /*    91.satırda Statement yerine PreparedStatement kullanılması performans açısından önemlidir.
+              PreparedStatement, sorgu derlemesini bir kez yaparak performans avantajı sağlar,
+              Statement ise her çalıştırmada sorguyu yeniden derleyerek daha esnek olabilir
+              ancak güvenlik ve performans açısından bazı dezavantajları vardır.
+              Prepared Statement, Statement'e göre tercih edilir.
+             */
+        try (Connection connection = DBdatasource.connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(queryById);
+        ) {
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String person_name = resultSet.getString("person_name");
+                String jersey_number = resultSet.getString("jersey_number");
+                String person_surname = resultSet.getString("person_surname");
+                String from_team = resultSet.getString("from_team");
+                System.out.println("Name:" + person_name + " Surname:" + person_surname + " Jersey:" + jersey_number + " From team:" + from_team);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

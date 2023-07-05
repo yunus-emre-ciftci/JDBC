@@ -11,7 +11,7 @@ public class DBdatasource {
         try {
             connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return connection;
     }
